@@ -35,7 +35,7 @@ public class GridPanel extends JPanel{
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		
 		//2. Initialize the pixel array using the rows and cols variables.
-		Pixel[][]pixel = new Pixel[r][c];
+		pixel = new Pixel[r][c];
 		
 		//3. Iterate through the array and initialize each element to a new pixel.
 		for (int i = 0; i < pixel.length; i++) {
@@ -67,7 +67,10 @@ public class GridPanel extends JPanel{
 		//   Then, use drawRect to add a grid pattern to your display.
 		for (int i = 0; i < pixel.length; i++) {
 			for (int j = 0; j < pixel[i].length; j++) {
+				System.out.println("working");
 				g.setColor(pixel[i][j].color);
+				g.fillRect(pixel[i][j].x, pixel[i][j].y, pixelWidth, pixelHeight);
+				g.setColor(Color.BLACK);
 				g.drawRect(i * pixelWidth, j * pixelHeight, windowWidth, windowHeight);
 			}
 		}
