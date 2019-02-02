@@ -18,6 +18,9 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	
 	private Timer timer;
 	
+	Random rand = new Random();
+	
+	
 	//1. Create a 2D array of Cells. Do not initialize it.
 Cell [][]cell;
 	
@@ -29,25 +32,43 @@ Cell [][]cell;
 		this.cellsPerRow = cpr;
 	
 		//2. Calculate the cell size.
+	
+		cellSize = w/cpr;
 		
 		//3. Initialize the cell array to the appropriate size.
+		cell = new Cell[w][h];
 		
 		//3. Iterate through the array and initialize each cell.
 		//   Don't forget to consider the cell's dimensions when 
 		//   passing in the location.
-		
+		for (int i = 0; i < cell.length; i++) {
+			for (int j = 0; j < cell.length; j++) {
+				cell[i][j] = new Cell (i * cellSize, j*cellSize, cellSize);
+			}
+		}
 	}
 	
 	public void randomizeCells() {
 		//4. Iterate through each cell and randomly set each
 		//   cell's isAlive memeber to true of false
+		for (int i = 0; i < cell.length; i++) {
+			for (int j = 0; j < cell.length; j++) {
+				boolean random = rand.nextBoolean();
+				cell[i][j].isAlive = random;
+				
+			}
+		}
 		
 		repaint();
 	}
 	
 	public void clearCells() {
 		//5. Iterate through the cells and set them all to dead.
-		
+		for (int i = 0; i < cell.length; i++) {
+			for (int j = 0; j < cell.length; j++) {
+				cell[i][j].isAlive = false;
+			}
+		}
 		repaint();
 	}
 	
@@ -66,7 +87,11 @@ Cell [][]cell;
 	@Override
 	public void paintComponent(Graphics g) {
 		//6. Iterate through the cells and draw them all
-		
+		for (int i = 0; i < cell.length; i++) {
+			for (int j = 0; j < cell.length; j++) {
+				cell[i][j].draw(g);
+			}
+		}
 		
 		
 		// draws grid
@@ -80,8 +105,19 @@ Cell [][]cell;
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		
+		for (int i = 0; i < cell.length; i++) {
+			for (int j = 0; j < cell.length; j++) {
+				livingNeighbors[i][j] = getLivingNeighbors(i, j);
+				
+			}
+		}
+		
 		//8. check if each cell should live or die
-	
+	for (int k = 0; k < livingNeighbors.length; k++) {
+		for (int l = 0; l < livingNeighbors.length; l++) {
+			cell[k][l].liveOrDie(livingNeighbors[k][l]);
+		}
+	}
 		
 		
 		
@@ -93,6 +129,19 @@ Cell [][]cell;
 	//   living neighbors there are of the 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
+		int numAlive = 0;
+		for (int i = x-1; i < cell.length; i++) {
+			for (int j = y-1; j < cell.length; j++) {
+				if (i == x && j == y) {
+					
+				}
+				else if (cell[i][j].isAlive) {
+					numAlive++;
+				}
+				
+				
+			}
+		}
 		return 0;
 	}
 
