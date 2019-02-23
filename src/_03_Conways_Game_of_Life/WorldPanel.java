@@ -18,7 +18,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	
 	private Timer timer;
 	
-	Random rand = new Random();
+	
 	
 	
 	//1. Create a 2D array of Cells. Do not initialize it.
@@ -36,7 +36,7 @@ Cell [][]cell;
 		cellSize = w/cpr;
 		
 		//3. Initialize the cell array to the appropriate size.
-		cell = new Cell[w][h];
+		cell = new Cell[cellsPerRow][cellsPerRow];
 		
 		//3. Iterate through the array and initialize each cell.
 		//   Don't forget to consider the cell's dimensions when 
@@ -53,7 +53,9 @@ Cell [][]cell;
 		//   cell's isAlive memeber to true of false
 		for (int i = 0; i < cell.length; i++) {
 			for (int j = 0; j < cell.length; j++) {
+				Random rand = new Random();
 				boolean random = rand.nextBoolean();
+				System.out.println(random);
 				cell[i][j].isAlive = random;
 				
 			}
@@ -130,19 +132,20 @@ Cell [][]cell;
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
 		int numAlive = 0;
-		for (int i = x-1; i < cell.length; i++) {
-			for (int j = y-1; j < cell.length; j++) {
+		for (int i = x-1; i < x+1; i++) {
+			for (int j = y-1; j < y+1; j++) {
 				if (i == x && j == y) {
 					
 				}
-				else if (cell[i][j].isAlive) {
+		
+				else if (i<cell.length && i>=0 && j<cell.length && j>=0 && cell[i][j].isAlive) {
 					numAlive++;
 				}
 				
 				
 			}
 		}
-		return 0;
+		return numAlive;
 	}
 
 	@Override
@@ -167,7 +170,20 @@ Cell [][]cell;
 		//10. Use e.getX() and e.getY() to determine
 		//    which cell is clicked. Then toggle
 		//    the isAlive variable for that cell.
+		int xIndex=e.getX()/cellSize;
+		int yIndex=e.getY()/cellSize;
 		
+		
+				
+				
+				if (cell[xIndex][yIndex].isAlive) {
+					cell[xIndex][yIndex].isAlive = false;
+				}
+				else {
+					cell[xIndex][yIndex].isAlive = true;
+				}
+				
+			
 		
 		
 		
