@@ -27,18 +27,19 @@ public class Cell implements Drawable{
 	 * 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 	 * (source: Wikipedia)
 	 * */
+	
 	public void liveOrDie(int numNeighbors) {
 
-		if (numNeighbors<2) {
+		if (isAlive == true && numNeighbors<2) {
 			isAlive =false;
 		}
-		else if (numNeighbors == 2 || numNeighbors == 3) {
+		else if (isAlive == true && numNeighbors == 2 || numNeighbors == 3) {
 			isAlive = true;
 		}
-		else if (numNeighbors>3) {
+		else if (isAlive == true && numNeighbors>3) {
 			isAlive = false;
 		}
-		else if (numNeighbors ==3) {
+		else if (isAlive == false && numNeighbors ==3) {
 			isAlive = true;
 		}
 		}

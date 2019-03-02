@@ -50,7 +50,7 @@ Cell [][]cell;
 	
 	public void randomizeCells() {
 		//4. Iterate through each cell and randomly set each
-		//   cell's isAlive memeber to true of false
+		//   cell's isAlive member to true of false
 		for (int i = 0; i < cell.length; i++) {
 			for (int j = 0; j < cell.length; j++) {
 				Random rand = new Random();
@@ -132,8 +132,8 @@ Cell [][]cell;
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
 		int numAlive = 0;
-		for (int i = x-1; i < x+1; i++) {
-			for (int j = y-1; j < y+1; j++) {
+		for (int i = x-1; i <= x+1; i++) {
+			for (int j = y-1; j <= y+1; j++) {
 				if (i == x && j == y) {
 					
 				}
@@ -141,6 +141,7 @@ Cell [][]cell;
 				else if (i<cell.length && i>=0 && j<cell.length && j>=0 && cell[i][j].isAlive) {
 					numAlive++;
 				}
+				
 				
 				
 			}
