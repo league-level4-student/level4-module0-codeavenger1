@@ -39,7 +39,7 @@ public class MazeMaker{
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
-		currentCell.hasBeenVisited();
+		currentCell.setBeenVisited(true);
 		
 		//B. check for unvisited neighbors using the cell
 		ArrayList<Cell> list = getUnvisitedNeighbors(currentCell);
@@ -49,21 +49,21 @@ public class MazeMaker{
 			
 			//C1. select one at random.
 			Cell neighbor = list.get(randGen.nextInt(list.size()));
-			list.get(randGen.nextInt(list.size()));
+		//	list.get(randGen.nextInt(list.size()));
 	
 			//C2. push it to the stack
 			uncheckedCells.push(neighbor);
 			//C3. remove the wall between the two cells
 			removeWalls(currentCell, neighbor);
 			//C4. make the new cell the current cell and mark it as visited
-			Cell newCell = currentCell;
-			currentCell.hasBeenVisited();
+		 currentCell = neighbor;
+			currentCell.setBeenVisited(true);
 			//C5. call the selectNextPath method with the current cell
 			selectNextPath(currentCell);
 			}
 			
 		//D. if all neighbors are visited
-		if (list.size()==0) {
+		else if (list.size()==0) {
 			
 			//D1. if the stack is not empty
 			if (uncheckedCells.isEmpty()==false) {
@@ -89,10 +89,20 @@ public class MazeMaker{
 			c1.setWestWall(false);
 			c2.setEastWall(false);
 		}
-		
-		if (Math.abs(c1.getX()-c2.getX())==1 && Math.abs(c1.getY()-c2.getY())==1) {
-		
+		else if (c1.getY()-c2.getY()==1) {
+			c1.setWestWall(false);
+			c2.setEastWall(false);
 		}
+		else if (c1.getX()-c2.getX()==1) {
+			c1.setNorthWall(false);
+			c2.setSouthWall(false);
+		} 
+		else if (c1.getY()-c2.getY()==1) {
+			c1.setNorthWall(false);
+			c2.setSouthWall(false);
+		}
+		
+
 		
 	}
 	
@@ -100,6 +110,19 @@ public class MazeMaker{
 	//   Any unvisited neighbor of the passed in cell gets added
 	//   to the ArrayList
 	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {
-		return null;
+		ArrayList<Cell> neigh = new ArrayList<Cell>();
+		int x = c.getX();
+		int y = c.getY();
+		
+		for (int i = x-1; i < x+1; i++) {
+			for (int j = y-1; j < y+1; j++) {
+				if (i<maze.cells.length && i>=0 && j<maze.cells.length && j>=0 && !maze.cells[i][j].hasBeenVisited()) {
+					neigh.add(c);
+				}
+			}
+			
+		}
+		
+		return neigh;
 	}
 }
