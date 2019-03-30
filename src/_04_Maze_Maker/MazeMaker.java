@@ -45,7 +45,7 @@ public class MazeMaker{
 		
 		//B. check for unvisited neighbors using the cell
 		ArrayList<Cell> list = getUnvisitedNeighbors(currentCell);
-		JOptionPane.showMessageDialog(null, String.valueOf(list.size()));
+		//JOptionPane.showMessageDialog(null, String.valueOf(list.size()));
 		//C. if has unvisited neighbors,
 		if (list.size()>0) {
 			
@@ -70,7 +70,7 @@ public class MazeMaker{
 			
 		//D. if all neighbors are visited
 		else  {
-			JOptionPane.showMessageDialog(null, "list empty");
+			
 			//D1. if the stack is not empty
 			if (!uncheckedCells.isEmpty()) {
 				
